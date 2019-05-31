@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreManufacturer;
-use App\Manufacturer;
-use App\Http\Resources\ManufacturerCollection;
-use App\Http\Resources\ManufacturerResource;
+use App\CarModel;
+use App\Http\Resources\CarModelCollection;
+use App\Http\Resources\CarModelResource;
 use Symfony\Component\HttpFoundation\Response;
 
-class ManufacturerController extends Controller
+class CarModelController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +17,7 @@ class ManufacturerController extends Controller
      */
     public function index()
     {
-        return ManufacturerCollection::collection(Manufacturer::paginate(10));
+        return CarModelCollection::collection(CarModel::paginate(10));
     }
 
     /**
@@ -39,16 +38,9 @@ class ManufacturerController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            $manufacturer = new Manufacturer;
-            $manufacturer->manufacturer_name = $request->manufacturer_name;
-            $manufacturer->save();
-            return response([
-                "data" => new ManufacturerResource($manufacturer),
-            ], Response::HTTP_CREATED);
-        } catch (Exception $e) {
-            return false;
-        }
+        return response([
+            "data" => new CarModelResource(CarModel::create($request->all())),
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -57,9 +49,9 @@ class ManufacturerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Manufacturer $manufacturer)
+    public function show(CarModel $car_model)
     {
-        return new ManufacturerResource($manufacturer);
+        return new CarModelResource($car_model);
     }
 
     /**
@@ -80,11 +72,11 @@ class ManufacturerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Manufacturer $manufacturer)
+    public function update(Request $request, CarModel $car_model)
     {
-        $manufacturer->update($request->all());
+        $car_model->update($request->all());
         return response([
-            "data" => new ManufacturerResource($manufacturer),
+            "data" => new CarModelResource($car_model),
         ], Response::HTTP_CREATED);
     }
 
@@ -94,9 +86,9 @@ class ManufacturerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Manufacturer $manufacturer)
+    public function destroy(CarModel $car_model)
     {
-        $manufacturer->delete();
+        $car_model->delete();
         return response(null, Response::HTTP_NO_CONTENT);
     }
 }

@@ -18,3 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::resource('manufacturer', 'ManufacturerController');
+Route::resource('car-model', 'CarModelController');
+Route::resource('car-inventory', 'CarInventroyController');

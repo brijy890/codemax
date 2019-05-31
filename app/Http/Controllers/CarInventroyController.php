@@ -3,13 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreManufacturer;
-use App\Manufacturer;
-use App\Http\Resources\ManufacturerCollection;
-use App\Http\Resources\ManufacturerResource;
-use Symfony\Component\HttpFoundation\Response;
 
-class ManufacturerController extends Controller
+class CarInventroyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +13,7 @@ class ManufacturerController extends Controller
      */
     public function index()
     {
-        return ManufacturerCollection::collection(Manufacturer::paginate(10));
+        //
     }
 
     /**
@@ -39,16 +34,7 @@ class ManufacturerController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            $manufacturer = new Manufacturer;
-            $manufacturer->manufacturer_name = $request->manufacturer_name;
-            $manufacturer->save();
-            return response([
-                "data" => new ManufacturerResource($manufacturer),
-            ], Response::HTTP_CREATED);
-        } catch (Exception $e) {
-            return false;
-        }
+        //
     }
 
     /**
@@ -57,9 +43,9 @@ class ManufacturerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Manufacturer $manufacturer)
+    public function show($id)
     {
-        return new ManufacturerResource($manufacturer);
+        //
     }
 
     /**
@@ -80,12 +66,9 @@ class ManufacturerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Manufacturer $manufacturer)
+    public function update(Request $request, $id)
     {
-        $manufacturer->update($request->all());
-        return response([
-            "data" => new ManufacturerResource($manufacturer),
-        ], Response::HTTP_CREATED);
+        //
     }
 
     /**
@@ -94,9 +77,8 @@ class ManufacturerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Manufacturer $manufacturer)
+    public function destroy($id)
     {
-        $manufacturer->delete();
-        return response(null, Response::HTTP_NO_CONTENT);
+        //
     }
 }
