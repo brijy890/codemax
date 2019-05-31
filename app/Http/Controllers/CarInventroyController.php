@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\CarInventory;
+use App\Http\Resources\CarInventorylCollection;
+use App\Http\Resources\CarInventoryResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class CarInventroyController extends Controller
 {
@@ -13,7 +17,7 @@ class CarInventroyController extends Controller
      */
     public function index()
     {
-        //
+        return CarInventorylCollection::collection(CarInventory::paginate(10));
     }
 
     /**
@@ -34,7 +38,9 @@ class CarInventroyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return response([
+            "data" => new CarInventoryResource(CarInventory::create($request->all())),
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -43,9 +49,9 @@ class CarInventroyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(CarInventory $car_inventory)
     {
-        //
+        return new CarInventoryResource($car_inventory);
     }
 
     /**
@@ -66,9 +72,12 @@ class CarInventroyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, CarInventory $car_inventory)
     {
-        //
+        $car_inventory->update($request->all());
+        return response([
+            "data" => new CarInventoryResource($car_inventory),
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -77,8 +86,9 @@ class CarInventroyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(CarInventory $car_inventory)
     {
-        //
+        $car_inventory->delete();
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }
