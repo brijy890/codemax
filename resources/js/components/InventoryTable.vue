@@ -47,7 +47,11 @@ export default {
       })
         .then(res => res.json())
         .then(res => {
-          console.log(res);
+          this.manufacturers.forEach((manufacturer) => {
+            if(manufacturer.id == id) {
+              manufacturer.remaing_count = res.data.remaing_count;
+            }
+          });
         });
     }
   }

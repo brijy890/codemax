@@ -1930,6 +1930,8 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     soldCar: function soldCar(id) {
+      var _this2 = this;
+
       fetch('/api/car-model/' + id, {
         method: 'put',
         headers: {
@@ -1938,7 +1940,11 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         return res.json();
       }).then(function (res) {
-        console.log(res);
+        _this2.manufacturers.forEach(function (manufacturer) {
+          if (manufacturer.id == id) {
+            manufacturer.remaing_count = res.data.remaing_count;
+          }
+        });
       });
     }
   }
