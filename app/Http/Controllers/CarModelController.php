@@ -74,7 +74,8 @@ class CarModelController extends Controller
      */
     public function update(Request $request, CarModel $car_model)
     {
-        $car_model->update($request->all());
+        $car_model->sold += 1;
+        $car_model->save(); 
         return response([
             "data" => new CarModelResource($car_model),
         ], Response::HTTP_CREATED);

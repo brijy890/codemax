@@ -1904,6 +1904,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1917,12 +1921,24 @@ __webpack_require__.r(__webpack_exports__);
     fetchData: function fetchData() {
       var _this = this;
 
-      fetch('/api/manufacturer').then(function (res) {
+      fetch('/api/car-model').then(function (res) {
         return res.json();
       }).then(function (res) {
         _this.manufacturers = res.data;
       })["catch"](function (err) {
         return console.log(err);
+      });
+    },
+    soldCar: function soldCar(id) {
+      fetch('/api/car-model/' + id, {
+        method: 'put',
+        headers: {
+          'content-type': 'application/json'
+        }
+      }).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        console.log(res);
       });
     }
   }
@@ -37475,7 +37491,27 @@ var render = function() {
       "tbody",
       _vm._l(_vm.manufacturers, function(manufacturer) {
         return _c("tr", [
-          _c("td", [_vm._v(_vm._s(manufacturer.manufacturer_name))])
+          _c("td", [_vm._v(_vm._s(manufacturer.manufacturer_name))]),
+          _vm._v(" "),
+          _c("td", [_vm._v(_vm._s(manufacturer.model_name))]),
+          _vm._v(" "),
+          _c("td", [_vm._v(_vm._s(manufacturer.remaing_count))]),
+          _vm._v(" "),
+          _c("td", [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-default",
+                attrs: { disabled: manufacturer.remaing_count <= 0 },
+                on: {
+                  click: function($event) {
+                    return _vm.soldCar(manufacturer.id)
+                  }
+                }
+              },
+              [_vm._v("Sold")]
+            )
+          ])
         ])
       }),
       0
@@ -37493,7 +37529,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Model")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Count")])
+        _c("th", [_vm._v("Count")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Action")])
       ])
     ])
   }
@@ -37528,7 +37566,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "nav",
-      { staticClass: "navbar navbar-expand-md navbar-dark bg-dark fixed-top" },
+      { staticClass: "navbar navbar-expand-md navbar-dark bg-dark" },
       [
         _c("a", { staticClass: "navbar-brand", attrs: { href: "#" } }, [
           _vm._v("Car Inventory")

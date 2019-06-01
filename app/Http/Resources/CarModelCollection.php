@@ -14,6 +14,11 @@ class CarModelCollection extends Resource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'manufacturer_name' => $this->getManufacturer->manufacturer_name,
+            'model_name' => $this->model_name,
+            'remaing_count' => (int)$this->total - (int)$this->sold
+        ];
     }
 }
