@@ -18,6 +18,8 @@ class CreateCarModelsTable extends Migration
             $table->bigInteger('manufacturer_id')->unsigned();
             $table->foreign('manufacturer_id')->references('id')->on('manufacturers');
             $table->string('model_name');
+            $table->bigInteger('total')->default(0);
+            $table->bigInteger('sold')->default(0);
             $table->timestamps();
         });
     }
