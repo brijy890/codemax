@@ -24,9 +24,7 @@
     <div id="app">
       <topnav></topnav>
       <div class="container">
-        <createmanufacturer></createmanufacturer>
-        <createcarmodel></createcarmodel>
-        <inventorytable></inventorytable>
+        <router-view></router-view>
       </div>
     </div>
 

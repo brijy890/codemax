@@ -8,6 +8,7 @@ use App\Manufacturer;
 use App\Http\Resources\ManufacturerCollection;
 use App\Http\Resources\ManufacturerResource;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Validator;
 
 class ManufacturerController extends Controller
 {
@@ -39,6 +40,14 @@ class ManufacturerController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+           'manufacturer_name' => 'required|string|max:50',
+       ]);
+
+        if ($validator->fails()) {
+            return $response['response'] = $validator->messages();
+        }
+
         try {
             $manufacturer = new Manufacturer;
             $manufacturer->manufacturer_name = $request->manufacturer_name;

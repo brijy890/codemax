@@ -24,7 +24,7 @@ class StoreManufacturer extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255'
+            'manufacturer_name' => 'required|max:255'
         ];
     }
 }

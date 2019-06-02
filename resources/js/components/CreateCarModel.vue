@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import router from '../app';
 export default {
   data() {
     return {
@@ -44,7 +45,7 @@ export default {
       })
         .then(res => res.json())
         .then(res => {
-        	console.log(res);
+        	router.push({ path: '/' });
         });
     },
     fetchData() {

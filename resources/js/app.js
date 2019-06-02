@@ -8,6 +8,10 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import VueRouter from 'vue-router';
+
+Vue.use(VueRouter);
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -21,16 +25,30 @@ window.Vue = require('vue');
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('topnav', require('./components/Topnav.vue').default);
-Vue.component('inventorytable', require('./components/InventoryTable.vue').default);
-Vue.component('createmanufacturer', require('./components/CreateManufacturer.vue').default);
-Vue.component('createcarmodel', require('./components/CreateCarModel.vue').default);
+let InventoryTable = require('./components/InventoryTable.vue').default;
+let CreateManufacturer = require('./components/CreateManufacturer.vue').default;
+let CreateCarModel = require('./components/CreateCarModel.vue').default;
+
+const routes = [
+  { path: '/', component: InventoryTable },
+  {path: '/create-manufacturer', component: CreateManufacturer},
+  {path: '/create-car-model', component: CreateCarModel},
+  {path: '/', redirect: '/'}
+]
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+const router = new VueRouter({
+  mode: 'history',
+  routes // short for `routes: routes`
+})
 
 const app = new Vue({
     el: '#app',
+    router
 });
+
+export default router;
